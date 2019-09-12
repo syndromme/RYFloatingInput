@@ -104,13 +104,13 @@ public class RYFloatingInput: UIView {
               })
               .drive(self.rx.status)
               .disposed(by: self.disposeBag)
+            
+              emptyVM.hintVisibleDrv
+                .drive(self.rx.hintVisible)
+                .disposed(by: self.disposeBag)
           }
         })
         .disposed(by: disposeBag)
-      
-      emptyVM.hintVisibleDrv
-        .drive(self.rx.hintVisible)
-        .disposed(by: self.disposeBag)
       
       
       let vm = RYFloatingInputViewModel(input: self.input.rx.text.orEmpty.asDriver(),
@@ -134,13 +134,13 @@ public class RYFloatingInput: UIView {
               })
               .drive(self.rx.status)
               .disposed(by: self.disposeBag)
+            
+              vm.hintVisibleDrv
+                .drive(self.rx.hintVisible)
+                .disposed(by: self.disposeBag)
           }
         })
         .disposed(by: disposeBag)
-      
-      vm.hintVisibleDrv
-        .drive(self.rx.hintVisible)
-        .disposed(by: self.disposeBag)
     }
 }
 

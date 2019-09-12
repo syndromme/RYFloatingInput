@@ -53,7 +53,7 @@ internal class RYFloatingInputViewModel {
       
       hintVisibleDrv = input
         .map({ (content) -> RYFloatingInput.HintVisibility in
-          return (content.count > 0) ? .visible : .hidden
+          return ((content.count > 0 && canEmpty) || (content.count == 0 && !canEmpty)) ? .visible : .hidden
         })
         .distinctUntilChanged()
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -35,8 +35,8 @@
                                 <constraint firstAttribute="height" constant="24" id="cGu-Yr-OIM"/>
                             </constraints>
                         </imageView>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqN-2n-YhU">
-                            <rect key="frame" x="12" y="4" width="0.0" height="10"/>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jqN-2n-YhU">
+                            <rect key="frame" x="12" y="4" width="336" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="tf3-Gh-IFI"/>
                             </constraints>
@@ -70,7 +70,7 @@
                                 <constraint firstItem="TSD-Ca-U7P" firstAttribute="centerX" secondItem="wo3-k0-iPU" secondAttribute="centerX" id="zYv-HU-Ka3"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHT-89-3pH">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dHT-89-3pH">
                             <rect key="frame" x="12" y="50" width="336" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="w2G-2M-bIL"/>
@@ -88,6 +88,7 @@
                         <constraint firstItem="dHT-89-3pH" firstAttribute="trailing" secondItem="EQU-37-ast" secondAttribute="trailing" id="Kpi-s3-V9x"/>
                         <constraint firstItem="1vt-3E-JeI" firstAttribute="centerY" secondItem="CQM-3t-2Kh" secondAttribute="centerY" id="L6G-Rw-oNX"/>
                         <constraint firstItem="wo3-k0-iPU" firstAttribute="leading" secondItem="EQU-37-ast" secondAttribute="leading" id="OtO-Lg-DUr"/>
+                        <constraint firstItem="jqN-2n-YhU" firstAttribute="trailing" secondItem="EQU-37-ast" secondAttribute="trailing" id="YIW-Lh-dvn"/>
                         <constraint firstItem="dHT-89-3pH" firstAttribute="leading" secondItem="EQU-37-ast" secondAttribute="leading" id="eE9-iN-YYp"/>
                         <constraint firstItem="EQU-37-ast" firstAttribute="top" secondItem="jqN-2n-YhU" secondAttribute="bottom" constant="2" id="hRf-Fr-6q8"/>
                         <constraint firstAttribute="height" constant="72" id="j4f-Ld-8Hs"/>
