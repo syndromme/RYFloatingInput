@@ -88,30 +88,59 @@ public class RYFloatingInput: UIView {
     
     fileprivate func rx() {
 
-        input.rx.controlEvent([.editingDidEnd, .editingDidBegin])
-            .subscribe(onNext: { _ in
-                self.divider.backgroundColor = self.input.isFirstResponder ? self.setting?.accentColor : self.setting?.dividerColor
-            })
-            .disposed(by: disposeBag)
-
-        let vm = RYFloatingInputViewModel(input: self.input.rx.text.orEmpty.asDriver(),
-                                          dependency: (maxLength: self.setting?.maxLength,
-                                                       inputType: self.setting?.inputType))
-
-        vm.inputViolatedDrv
-            .map({ (status) -> (status: ViolationStatus, violation: InputViolation?)in
+      let emptyVM = RYFloatingInputViewModel(input: self.input.rx.text.orEmpty.asDriver(), canEmpty: self.setting?.canEmpty ?? true)
+      input.rx.controlEvent([.editingDidEnd])
+        .subscribe(onNext: { _ in
+          self.divider.backgroundColor = self.setting?.dividerColor
+          self.floatingHint.textColor = self.setting?.dividerColor
+          if !self.input.isFirstResponder {
+            emptyVM.inputViolatedDrv
+              .map({ (status) -> (status: ViolationStatus, violation: InputViolation?) in
+                if status == .emptyViolated {
+                  return (status, self.setting?.emptyViolation)
+                } else {
+                  return (status, nil)
+                }
+              })
+              .drive(self.rx.status)
+              .disposed(by: self.disposeBag)
+          }
+        })
+        .disposed(by: disposeBag)
+      
+      emptyVM.hintVisibleDrv
+        .drive(self.rx.hintVisible)
+        .disposed(by: self.disposeBag)
+      
+      
+      let vm = RYFloatingInputViewModel(input: self.input.rx.text.orEmpty.asDriver(),
+                                        dependency: (maxLength: self.setting?.maxLength,
+                                                     inputType: self.setting?.inputType))
+      
+      input.rx.controlEvent([.editingDidBegin])
+        .subscribe(onNext: { _ in
+          self.divider.backgroundColor = self.setting?.accentColor
+          self.floatingHint.textColor = self.setting?.accentColor
+          if !self.input.isFirstResponder {
+            
+            vm.inputViolatedDrv
+              .map({ (status) -> (status: ViolationStatus, violation: InputViolation?)in
                 switch status {
                 case .valid:                return (status, nil)
                 case .inputTypeViolated:    return (status, self.setting?.inputTypeViolation)
                 case .maxLengthViolated:    return (status, self.setting?.maxLengthViolation)
+                case .emptyViolated:        return (status, self.setting?.emptyViolation)
                 }
-            })
-            .drive(self.rx.status)
-            .disposed(by: disposeBag)
-
-        vm.hintVisibleDrv
-            .drive(self.rx.hintVisible)
-            .disposed(by: disposeBag)
+              })
+              .drive(self.rx.status)
+              .disposed(by: self.disposeBag)
+          }
+        })
+        .disposed(by: disposeBag)
+      
+      vm.hintVisibleDrv
+        .drive(self.rx.hintVisible)
+        .disposed(by: self.disposeBag)
     }
 }
 

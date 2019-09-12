@@ -30,6 +30,8 @@ public extension RYFloatingInputSetting {
         fileprivate var _maxLengthViolation: RYFloatingInput.InputViolation?
         fileprivate var _inputType: RYFloatingInput.InputType?
         fileprivate var _inputTypeViolation: RYFloatingInput.InputViolation?
+        fileprivate var _canEmpty: Bool?
+        fileprivate var _emptyViolation: RYFloatingInput.InputViolation?
 
         public static func instance() -> Builder {
             return Builder()
@@ -106,6 +108,16 @@ public extension RYFloatingInputSetting {
             _inputTypeViolation = violation
             return self
         }
+      
+        public func canEmpty(_ canEmpty: Bool) -> Builder {
+          _canEmpty = canEmpty
+          return self
+        }
+      
+        public func emptyViolation(violation: RYFloatingInput.InputViolation) -> Builder {
+          _emptyViolation = violation
+          return self
+        }
 
         public func build() -> RYFloatingInputSetting {
             return RYFloatingInputSetting(builder: self)
@@ -132,6 +144,8 @@ public class RYFloatingInputSetting {
     internal let maxLengthViolation: RYFloatingInput.InputViolation?
     internal let inputType: RYFloatingInput.InputType?
     internal let inputTypeViolation: RYFloatingInput.InputViolation?
+    internal let canEmpty: Bool?
+    internal let emptyViolation: RYFloatingInput.InputViolation?
 
     private init(builder: Builder) {
 
@@ -152,6 +166,8 @@ public class RYFloatingInputSetting {
         self.maxLengthViolation = builder._maxLengthViolation
         self.inputType = builder._inputType
         self.inputTypeViolation = builder._inputTypeViolation
+        self.canEmpty = builder._canEmpty
+        self.emptyViolation = builder._emptyViolation
     }
 
 

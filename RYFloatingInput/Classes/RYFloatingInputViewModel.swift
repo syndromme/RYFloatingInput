@@ -38,6 +38,25 @@ internal class RYFloatingInputViewModel {
             })
             .distinctUntilChanged()
     }
+  
+    internal init(input: Driver<String>, canEmpty: Bool) {
+      
+      inputViolatedDrv = input
+        .map({ (content) -> RYFloatingInput.ViolationStatus in
+          
+          if !canEmpty && content.count == 0 {
+            return .emptyViolated
+          }
+          
+          return .valid
+        })
+      
+      hintVisibleDrv = input
+        .map({ (content) -> RYFloatingInput.HintVisibility in
+          return (content.count > 0) ? .visible : .hidden
+        })
+        .distinctUntilChanged()
+    }
 }
 
 private extension RYFloatingInputViewModel {

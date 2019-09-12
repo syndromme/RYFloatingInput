@@ -98,6 +98,7 @@ internal extension RYFloatingInput {
         case valid
         case maxLengthViolated
         case inputTypeViolated
+        case emptyViolated
     }
 
     internal enum HintVisibility {
