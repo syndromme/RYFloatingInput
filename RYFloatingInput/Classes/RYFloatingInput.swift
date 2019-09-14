@@ -37,6 +37,10 @@ public extension RYFloatingInput {
     public func text() -> String? {
         return self.input.text
     }
+  
+    public func setText(_ text: String?) {
+      self.input.text = text
+    }
 
     public func setEnabled(_ flag: Bool? = true) {
         self.input.isUserInteractionEnabled = flag!
