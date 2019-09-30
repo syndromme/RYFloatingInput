@@ -49,6 +49,20 @@ public extension RYFloatingInput {
     public override func resignFirstResponder() -> Bool {
         return input.resignFirstResponder()
     }
+  
+    public func setFocus() {
+        self.input.becomeFirstResponder()
+    }
+  
+    public func showErrorMessage() {
+        self.input.becomeFirstResponder()
+        self.input.resignFirstResponder()
+        self.input.becomeFirstResponder()
+    }
+  
+    public func textField() -> UITextField {
+        return self.input
+    }
 }
 
 public class RYFloatingInput: UIView {
