@@ -25,7 +25,7 @@ public extension RYFloatingInputSetting {
         fileprivate var _dividerWeight: RYFloatingInput.DividerWeight = .regular
         fileprivate var _placeholder: String?
         fileprivate var _secure: Bool = false
-        fileprivate var _enableAction: Bool = false
+        fileprivate var _enableAction: Bool = true
 
         fileprivate var _maxLength: Int?
         fileprivate var _maxLengthViolation: RYFloatingInput.InputViolation?
