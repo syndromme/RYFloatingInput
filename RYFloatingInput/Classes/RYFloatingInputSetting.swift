@@ -25,6 +25,7 @@ public extension RYFloatingInputSetting {
         fileprivate var _dividerWeight: RYFloatingInput.DividerWeight = .regular
         fileprivate var _placeholder: String?
         fileprivate var _secure: Bool = false
+        fileprivate var _enableAction: Bool = false
 
         fileprivate var _maxLength: Int?
         fileprivate var _maxLengthViolation: RYFloatingInput.InputViolation?
@@ -95,6 +96,11 @@ public extension RYFloatingInputSetting {
         public func secure(_ isSecure: Bool) -> Builder {
             _secure = isSecure
             return self
+        }
+      
+        public func enableAction(_ isActionEnable: Bool) -> Builder {
+          _enableAction = isActionEnable
+          return self
         }
 
         public func maxLength(_ length: Int, onViolated violation: RYFloatingInput.InputViolation) -> Builder {
@@ -169,6 +175,7 @@ public class RYFloatingInputSetting {
         self.inputTypeViolation = builder._inputTypeViolation
         self.canEmpty = builder._canEmpty
         self.emptyViolation = builder._emptyViolation
+        self.enableAction = builder._enableAction
     }
 
 
