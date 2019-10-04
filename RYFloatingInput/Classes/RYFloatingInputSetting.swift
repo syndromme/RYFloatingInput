@@ -139,6 +139,7 @@ public class RYFloatingInputSetting {
     internal let dividerHeight: CGFloat
     internal let placeholder: String?
     internal let isSecure: Bool?
+    internal let enableAction: Bool?
 
     internal let maxLength: Int?
     internal let maxLengthViolation: RYFloatingInput.InputViolation?

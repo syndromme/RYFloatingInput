@@ -160,6 +160,16 @@ public class RYFloatingInput: UIView {
         })
         .disposed(by: disposeBag)
     }
+  
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+      if setting?.enableAction ?? false {
+        UIMenuController.shared.isMenuVisible = false
+        self.resignFirstResponder()
+        return false
+      } else {
+        return super.canPerformAction(action, withSender: sender)
+      }
+    }
 }
 
 private extension Reactive where Base: RYFloatingInput {
