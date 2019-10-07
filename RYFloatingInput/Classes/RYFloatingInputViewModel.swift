@@ -20,9 +20,14 @@ internal class RYFloatingInputViewModel {
         inputViolatedDrv = input
             .map({ (content) -> RYFloatingInput.ViolationStatus in
 
-                guard content.count > 0 else {
+                guard content.count > 0 && dependency.canEmpty! else {
                     return .valid
                 }
+              
+                if !(dependency.canEmpty!) {
+                  return .emptyViolated
+                }
+              
                 guard let rp = dependency.inputType?.pattern, !RYFloatingInputViewModel.regex(pattern: rp, input: content) else {
                     return .inputTypeViolated
                 }
