@@ -15,7 +15,7 @@ internal class RYFloatingInputViewModel {
     internal let inputViolatedDrv: Driver<RYFloatingInput.ViolationStatus>
     internal let hintVisibleDrv: Driver<RYFloatingInput.HintVisibility>
 
-    internal init(input: Driver<String>, dependency: (maxLength: Int?, inputType: RYFloatingInput.InputType?)) {
+    internal init(input: Driver<String>, dependency: (maxLength: Int?, inputType: RYFloatingInput.InputType?, canEmpty: Bool?)) {
      
         inputViolatedDrv = input
             .map({ (content) -> RYFloatingInput.ViolationStatus in
@@ -34,28 +34,9 @@ internal class RYFloatingInputViewModel {
 
         hintVisibleDrv = input
             .map({ (content) -> RYFloatingInput.HintVisibility in
-                return (content.count > 0) ? .visible : .hidden
+                return (content.count > 0) ? .visible : ((dependency.canEmpty ?? true) ? .visible : .hidden)//(content.count > 0) ? .visible : .hidden
             })
             .distinctUntilChanged()
-    }
-  
-    internal init(input: Driver<String>, canEmpty: Bool) {
-      
-      inputViolatedDrv = input
-        .map({ (content) -> RYFloatingInput.ViolationStatus in
-          
-          if !canEmpty && content.count == 0 {
-            return .emptyViolated
-          }
-          
-          return .valid
-        })
-      
-      hintVisibleDrv = input
-        .map({ (content) -> RYFloatingInput.HintVisibility in
-          return ((content.count > 0 && canEmpty) || (content.count == 0 && !canEmpty)) ? .visible : .hidden
-        })
-        .distinctUntilChanged()
     }
 }
 

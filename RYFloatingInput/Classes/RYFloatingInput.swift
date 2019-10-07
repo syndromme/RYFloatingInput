@@ -105,28 +105,17 @@ public class RYFloatingInput: UIView {
     }
     
     fileprivate func rx() {
-
-      let emptyVM = RYFloatingInputViewModel(input: self.input.rx.text.orEmpty.asDriver(), canEmpty: self.setting?.canEmpty ?? true)
       
       let vm = RYFloatingInputViewModel(input: self.input.rx.text.orEmpty.asDriver(),
                                         dependency: (maxLength: self.setting?.maxLength,
-                                                     inputType: self.setting?.inputType))
+                                                     inputType: self.setting?.inputType,
+                                                     canEmpty: self.setting?.canEmpty))
       
       input.rx.controlEvent([.editingDidEnd])
         .subscribe(onNext: { _ in
           self.divider.backgroundColor = self.setting?.dividerColor
           self.floatingHint.textColor = self.setting?.dividerColor
           if !self.input.isFirstResponder {
-            emptyVM.inputViolatedDrv
-              .map({ (status) -> (status: ViolationStatus, violation: InputViolation?) in
-                if status == .emptyViolated {
-                  return (status, self.setting?.emptyViolation)
-                } else {
-                  return (status, nil)
-                }
-              })
-              .drive(self.rx.status)
-              .disposed(by: self.disposeBag)
             
             vm.inputViolatedDrv
               .map({ (status) -> (status: ViolationStatus, violation: InputViolation?)in
@@ -138,6 +127,10 @@ public class RYFloatingInput: UIView {
                 }
               })
               .drive(self.rx.status)
+              .disposed(by: self.disposeBag)
+            
+            vm.hintVisibleDrv
+              .drive(self.rx.hintVisible)
               .disposed(by: self.disposeBag)
           }
         })
@@ -148,16 +141,6 @@ public class RYFloatingInput: UIView {
           self.divider.backgroundColor = self.setting?.accentColor
           self.floatingHint.textColor = self.setting?.accentColor
           if !self.input.isFirstResponder {
-            emptyVM.inputViolatedDrv
-              .map({ (status) -> (status: ViolationStatus, violation: InputViolation?) in
-                if status == .emptyViolated {
-                  return (status, self.setting?.emptyViolation)
-                } else {
-                  return (status, nil)
-                }
-              })
-              .drive(self.rx.status)
-              .disposed(by: self.disposeBag)
             
             vm.inputViolatedDrv
               .map({ (status) -> (status: ViolationStatus, violation: InputViolation?)in
@@ -170,17 +153,20 @@ public class RYFloatingInput: UIView {
               })
               .drive(self.rx.status)
               .disposed(by: self.disposeBag)
+            
+            vm.hintVisibleDrv
+              .drive(self.rx.hintVisible)
+              .disposed(by: self.disposeBag)
           }
         })
         .disposed(by: disposeBag)
       
-      emptyVM.hintVisibleDrv
-        .drive(self.rx.hintVisible)
-        .disposed(by: self.disposeBag)
-      
-      vm.hintVisibleDrv
-        .drive(self.rx.hintVisible)
-        .disposed(by: self.disposeBag)
+      input.rx.controlEvent([.editingChanged])
+        .subscribe(onNext: { (_) in
+          vm.hintVisibleDrv
+            .drive(self.rx.hintVisible)
+            .disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
     }
   
     override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
