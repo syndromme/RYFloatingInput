@@ -20,11 +20,11 @@ internal class RYFloatingInputViewModel {
         inputViolatedDrv = input
             .map({ (content) -> RYFloatingInput.ViolationStatus in
 
-                guard content.count > 0 && dependency.canEmpty! else {
-                    return .valid
+                guard (content.count == 0 && !(dependency.canEmpty!) || (content.count > 0 && (dependency.canEmpty!))) else {
+                  return .valid
                 }
-              
-                if !(dependency.canEmpty!) {
+                
+                if content.count == 0 && !(dependency.canEmpty!) {
                   return .emptyViolated
                 }
               
