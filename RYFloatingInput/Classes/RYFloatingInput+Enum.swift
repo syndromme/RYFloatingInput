@@ -96,6 +96,7 @@ internal extension RYFloatingInput {
 
     internal enum ViolationStatus {
         case valid
+        case minLengthViolated
         case maxLengthViolated
         case inputTypeViolated
         case emptyViolated

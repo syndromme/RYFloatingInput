@@ -107,7 +107,8 @@ public class RYFloatingInput: UIView {
     fileprivate func rx() {
       
       let vm = RYFloatingInputViewModel(input: self.input.rx.text.orEmpty.asDriver(),
-                                        dependency: (maxLength: self.setting?.maxLength,
+                                        dependency: (minLength: self.setting?.minLength,
+                                                     maxLength: self.setting?.maxLength,
                                                      inputType: self.setting?.inputType,
                                                      canEmpty: self.setting?.canEmpty))
       
@@ -124,6 +125,7 @@ public class RYFloatingInput: UIView {
                 case .inputTypeViolated:    return (status, self.setting?.inputTypeViolation)
                 case .maxLengthViolated:    return (status, self.setting?.maxLengthViolation)
                 case .emptyViolated:        return (status, self.setting?.emptyViolation)
+                case .minLengthViolated:    return (status, self.setting?.minLengthViolation)
                 }
               })
               .drive(self.rx.status)
@@ -149,6 +151,7 @@ public class RYFloatingInput: UIView {
                 case .inputTypeViolated:    return (status, self.setting?.inputTypeViolation)
                 case .maxLengthViolated:    return (status, self.setting?.maxLengthViolation)
                 case .emptyViolated:        return (status, self.setting?.emptyViolation)
+                case .minLengthViolated:    return (status, self.setting?.minLengthViolation)
                 }
               })
               .drive(self.rx.status)

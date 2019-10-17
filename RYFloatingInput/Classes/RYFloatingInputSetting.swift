@@ -27,6 +27,8 @@ public extension RYFloatingInputSetting {
         fileprivate var _secure: Bool = false
         fileprivate var _enableAction: Bool = true
 
+        fileprivate var _minLength: Int?
+        fileprivate var _minLengthViolation: RYFloatingInput.InputViolation?
         fileprivate var _maxLength: Int?
         fileprivate var _maxLengthViolation: RYFloatingInput.InputViolation?
         fileprivate var _inputType: RYFloatingInput.InputType?
@@ -102,6 +104,12 @@ public extension RYFloatingInputSetting {
           _enableAction = isActionEnable
           return self
         }
+      
+        public func minLength(_ length: Int, onViolated violation: RYFloatingInput.InputViolation) -> Builder {
+          _minLength = length
+          _minLengthViolation = violation
+          return self
+        }
 
         public func maxLength(_ length: Int, onViolated violation: RYFloatingInput.InputViolation) -> Builder {
             _maxLength = length
@@ -147,6 +155,8 @@ public class RYFloatingInputSetting {
     internal let isSecure: Bool?
     internal let enableAction: Bool?
 
+    internal let minLength: Int?
+    internal let minLengthViolation: RYFloatingInput.InputViolation?
     internal let maxLength: Int?
     internal let maxLengthViolation: RYFloatingInput.InputViolation?
     internal let inputType: RYFloatingInput.InputType?
@@ -169,6 +179,8 @@ public class RYFloatingInputSetting {
         self.placeholder = builder._placeholder
         self.isSecure = builder._secure
 
+        self.minLength = builder._minLength
+        self.minLengthViolation = builder._minLengthViolation
         self.maxLength = builder._maxLength
         self.maxLengthViolation = builder._maxLengthViolation
         self.inputType = builder._inputType

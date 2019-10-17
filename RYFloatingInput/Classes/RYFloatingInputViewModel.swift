@@ -15,17 +15,21 @@ internal class RYFloatingInputViewModel {
     internal let inputViolatedDrv: Driver<RYFloatingInput.ViolationStatus>
     internal let hintVisibleDrv: Driver<RYFloatingInput.HintVisibility>
 
-    internal init(input: Driver<String>, dependency: (maxLength: Int?, inputType: RYFloatingInput.InputType?, canEmpty: Bool?)) {
+      internal init(input: Driver<String>, dependency: (minLength: Int?, maxLength: Int?, inputType: RYFloatingInput.InputType?, canEmpty: Bool?)) {
      
         inputViolatedDrv = input
             .map({ (content) -> RYFloatingInput.ViolationStatus in
 
-                guard (content.count == 0 && !(dependency.canEmpty!) || (content.count > 0 && (dependency.canEmpty!))) else {
-                  return .valid
-                }
-                
+//                guard (content.count == 0 && !(dependency.canEmpty!) || (content.count > 0 && (dependency.canEmpty!))) else {
+//                  return .valid
+//                }
+              
                 if content.count == 0 && !(dependency.canEmpty!) {
                   return .emptyViolated
+                }
+              
+                guard let minL = dependency.minLength, content.count >= minL else {
+                  return .minLengthViolated
                 }
               
                 guard let rp = dependency.inputType?.pattern, !RYFloatingInputViewModel.regex(pattern: rp, input: content) else {
